@@ -15,13 +15,15 @@ try:
         'df_analysis': None,
         'gen_path': gen_path,
         'sql_query': os.getenv('TRN_BUSCA_NF_SQL', 'trn_ml_busca_nf.sql'),
-        'sample_size': 1000,
+        'sample_size': 100000,
         'save_results_to_db': False,
         'refresh_source': 'sql', # sql, azure_csv     
         'csv_remote_name': f'trn_{experiment_name}.csv',
     }
 
     runner.initialize(params)
+
+    runner.df_analysis.to_csv(os.path.join(gen_path, params['csv_remote_name']), index=True)
 
     if runner.df_analysis is not None:
         print(f'Returned {len(runner.df_analysis)}')
