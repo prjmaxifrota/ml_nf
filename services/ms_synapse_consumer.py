@@ -1,7 +1,7 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from analysis_generators.sql_storage import ConnectionType, SqlStorage
+from services.sql_storage import ConnectionType, SqlStorage
 from services.file_services import FileServices
 
 analytics_endpoint = "rlqqphyufm2e7g2qka46krw7xi-qnlc7nyhjl7u7km24oymwac3ye.datawarehouse.fabric.microsoft.com"

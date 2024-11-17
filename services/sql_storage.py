@@ -8,6 +8,10 @@ import pandas as pd
 import os, datetime, re
 import time
 import warnings
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Ignore the specific UserWarning from pandas
 warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy connectable")
@@ -30,6 +34,7 @@ class SqlStorage:
         self.database = database
         self.username = username
         self.password = password
+        self.odbc_driver_version = os.getenv("ODBC_DRIVER_VERSION", "18") 
         self.conn = None  
         
         if self.host is None or self.database is None:
@@ -46,7 +51,7 @@ class SqlStorage:
                 self.attrs_before = {1256: token_bytes}  # SQL_COPT_SS_ACCESS_TOKEN attribute
                 
                 self.connection_string = (
-                    f"Driver={{ODBC Driver 18 for SQL Server}};"
+                    f"Driver={{ODBC Driver {self.odbc_driver_version} for SQL Server}};"
                     f"Server={self.host};"
                     f"Database={self.database};"
                     "Encrypt=Yes;TrustServerCertificate=No;"
@@ -57,7 +62,7 @@ class SqlStorage:
                 
                 if self.username and self.password:
                     self.connection_string = (
-                        f"Driver={{ODBC Driver 18 for SQL Server}};"
+                        f"Driver={{ODBC Driver {self.odbc_driver_version} for SQL Server}};"
                         f"Server={self.host};"
                         f"Database={self.database};"
                         f"Uid={self.username};Pwd={self.password};"
@@ -66,7 +71,7 @@ class SqlStorage:
                 else:
                     # Use Trusted Connection (Windows Authentication)
                     self.connection_string = (
-                        f"Driver={{ODBC Driver 18 for SQL Server}};"
+                         f"Driver={{ODBC Driver {self.odbc_driver_version} for SQL Server}};"
                         f"Server={self.host};"
                         f"Database={self.database};"
                         "Trusted_Connection=yes;Encrypt=no;"
