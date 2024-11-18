@@ -15,7 +15,7 @@ try:
         'df_analysis': None,
         'gen_path': gen_path,
         'sql_query': os.getenv('TRN_BUSCA_NF_SQL', 'trn_ml_busca_nf.sql'),
-        'sample_size': 100000,
+        'sample_size': 5000,
         'save_results_to_db': False,
         'refresh_source': 'sql', # sql, azure_csv     
         'csv_remote_name': f'trn_{experiment_name}.csv',

@@ -1,4 +1,4 @@
-select top {sample_size} 
+select top 100
        t.id,
 	   t.data_hora_transacao_inicio,
 	   t.valor,
@@ -22,6 +22,3 @@ select top {sample_size}
 	   --left join transacao_complemento tc on tc.transacao_id = t.id
  where 1=1
    and versao_aplicativo = 'mobile'
-   --and t.credenciado_id = (73557)
- order by t.data_hora_transacao_inicio desc
-
