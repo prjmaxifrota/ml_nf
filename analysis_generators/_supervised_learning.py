@@ -31,6 +31,10 @@ class SupervisedLearning:
         
         self.df = df.copy()  # Make a copy of df to avoid modifying the original
 
+        if self.df[target_col].isnull().any():
+            self.df[target_col].fillna(self.df[target_col].mode()[0], inplace=True)
+
+
         # Set the index on the copy to ensure original df remains unchanged
         if self.id_col in self.df.columns:
             self.df = self.df.set_index(self.id_col)
@@ -213,6 +217,8 @@ class SupervisedLearning:
                         and not row['lr_correct'] 
                         else 'Clear Relationship', axis=1
         )
+
+        combined_df = combined_df.dropna(subset=[self.target_col, 'ridge_pred'])
         
         # Calculate accuracy for each model by comparing predictions with the target column
         combined_df['ridge_accuracy'] = combined_df.apply(lambda row: accuracy_score([row[self.target_col]], [row['ridge_pred']]), axis=1)

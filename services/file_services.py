@@ -102,6 +102,17 @@ class FileServices:
             config_data = yaml.safe_load(file)
         
         return config_data
+    
+    def count_csv_rows(self, csv_path):
+        
+        total_rows = 0
+        try:
+            total_rows = sum(1 for _ in open(csv_path, encoding='utf-8'))
+        except UnicodeDecodeError:
+            # Retry with a different encoding if utf-8 fails
+            total_rows = sum(1 for _ in open(csv_path, encoding='latin1'))
+        
+        return total_rows
 
     def create_instance(module_and_class_name: str, args: list = [], kwargs: dict = {}) -> any:
 

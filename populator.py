@@ -127,7 +127,10 @@ class Populator:
         if not error:
             sql_query = sql_query.replace('{sample_size}', sample_size)
             try:
+                start = time.time()
+                print('Starting executiing query...')
                 df = executor.execute_query(sql_query)
+                print('COMPLETED executiing query.')
                 self.df_analysis = df
             except Exception as e:
                 self.df_analysis = None
